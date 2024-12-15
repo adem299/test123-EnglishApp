@@ -45,7 +45,7 @@ const QuizResultPage = () => {
           </button>
           <button
             className="bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-600"
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate("https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/dashboard")}
           >
             NEXT
           </button>

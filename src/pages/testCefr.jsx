@@ -20,7 +20,7 @@ const TestCefrPage = () => {
   useEffect(() => {
     if (cefrLevel) {
       console.log("CEFR Level updated:", cefrLevel);
-      navigate("/result/cefr", { state: { cefrLevel } });
+      navigate("https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/result/cefr", { state: { cefrLevel } });
     }
   }, [cefrLevel, navigate]);
 

@@ -123,7 +123,7 @@ const Dashboard = () => {
               quizData.map((quiz) => (
                 <a
                   key={quiz.id} // Gunakan id unik sebagai key
-                  href={`/quiz/${quiz.id}`} // Tautkan ke halaman quiz dengan id
+                  href={`https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/quiz/${quiz.id}`} // Tautkan ke halaman quiz dengan id
                   className="block bg-white rounded-lg shadow-md p-4"
                 >
                   <img

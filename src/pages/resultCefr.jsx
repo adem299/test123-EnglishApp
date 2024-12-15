@@ -1,4 +1,9 @@
+import { useLocation } from "react-router-dom";
+
 const ResultCefrPage = () => {
+  const location = useLocation();
+  const { cefrLevel } = location.state || {};
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-3xl p-6">
@@ -9,7 +14,9 @@ const ResultCefrPage = () => {
           {/* General Level Box */}
           <div className="flex flex-col items-center justify-center bg-gray-50 rounded-lg shadow-md p-6 w-1/3">
             <p className="text-gray-600 font-medium">General level</p>
-            <p className="text-blue-500 text-4xl font-bold mt-2">A1</p>
+            <p className="text-blue-500 text-4xl font-bold mt-2">
+              {cefrLevel ? cefrLevel : "No data available"}
+            </p>
           </div>
           {/* Analysis Text Box */}
           <div className="bg-gray-50 rounded-lg shadow-md p-6 w-2/3">

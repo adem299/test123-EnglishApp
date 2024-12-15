@@ -91,7 +91,7 @@ const QuizPage = () => {
     try {
       const result = await submitAnswers(payload);
   
-      navigate("https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/result/quiz", { state: { score: result.score, percentage: result.percentage } });
+      navigate("https://test123-english-app.vercel.app/result/quiz", { state: { score: result.score, percentage: result.percentage } });
     } catch (err) {
       alert("Error: " + err.message);
     }

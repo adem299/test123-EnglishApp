@@ -115,7 +115,7 @@ const ReviewQuiz = () => {
             if (window.history.length > 1) {
               navigate(-1); // Go back to the previous page
             } else {
-              navigate("https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/dashboard"); // Fallback to the dashboard if no history
+              navigate("https://test123-english-app.vercel.app/dashboard"); // Fallback to the dashboard if no history
             }
           }}
         >

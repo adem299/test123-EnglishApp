@@ -50,7 +50,7 @@ function Login() {
       const data = await response.json();
       console.log("Login Success:", data);
 
-      window.location.href = "https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/dashboard";
+      window.location.href = "https://test123-english-app.vercel.app/dashboard";
     } catch (error) {
       console.error("Login Error:", error);
       setErrorMessage(error.message);
@@ -121,7 +121,7 @@ function Login() {
           </button>
           <p className="text-slate-600 text-center mt-4">
             Don’t you have an account?{" "}
-            <a href="https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/register" className="text-blue-500 hover:underline">
+            <a href="https://test123-english-app.vercel.app/register" className="text-blue-500 hover:underline">
               Register
             </a>
           </p>

@@ -14,40 +14,40 @@ import ReviewQuiz from './pages/reviewQuiz.jsx'
 
 const router = createBrowserRouter([
   {
-    path: "https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/",
+    path: "https://test123-english-app.vercel.app/login",
     element: <LoginPage />,
     errorElement: <ErrorPage />,  
   },
   {
-    path: "https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/login",
+    path: "https://test123-english-app.vercel.app/login",
     element: <LoginPage />,
   },
   {
-    path: "https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/register",
+    path: "https://test123-english-app.vercel.app/register",
     element: <RegisterPage />,
   },
   {
-    path: "https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/test/cefr",
+    path: "https://test123-english-app.vercel.app/test/cefr",
     element: <TestCefrPage />,
   },
   {
-    path: "https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/result/cefr",
+    path: "https://test123-english-app.vercel.app/result/cefr",
     element: <ResultCefrPage />,
   },
   {
-    path: "https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/quiz/:id",
+    path: "https://test123-english-app.vercel.app/quiz/:id",
     element: <QuizPage />,
   },
   {
-    path: "https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/review/quiz",
+    path: "https://test123-english-app.vercel.app/review/quiz",
     element: <ReviewQuiz />,
   },
   {
-    path: "https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/result/quiz",
+    path: "https://test123-english-app.vercel.app/result/quiz",
     element: <QuizResultPage />,
   },
   {
-    path: "https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/dashboard",
+    path: "https://test123-english-app.vercel.app/dashboard",
     element: <Dashboard />,
   }
 ])

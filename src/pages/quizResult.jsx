@@ -39,13 +39,13 @@ const QuizResultPage = () => {
         <div className="flex justify-center gap-8">
           <button
             className="bg-yellow-400 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-yellow-500"
-            onClick={() => navigate("/review/quiz")}
+            onClick={() => navigate("https://test123-english-app.vercel.app/review/quiz")}
           >
             REVIEW EXERCISE
           </button>
           <button
             className="bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-600"
-            onClick={() => navigate("https://test123-english-a7p9iddok-ade-mulyanas-projects.vercel.app/register/dashboard")}
+            onClick={() => navigate("https://test123-english-app.vercel.app/dashboard")}
           >
             NEXT
           </button>

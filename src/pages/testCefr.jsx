@@ -14,6 +14,7 @@ const TestCefrPage = () => {
   const handleAnalyze = async () => {
     await predictCefrLevel(text);
     console.log("API call triggered, waiting for cefrLevel");
+    
   };
 
   useEffect(() => {

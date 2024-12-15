@@ -1,37 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { fetchQuestions, submitAnswers } from "../services/quiz.service";
+import { useNavigate } from "react-router-dom";
 
-// Component for Individual Question
 const Question = ({ questionData, questionNumber, onAnswerChange }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    onAnswerChange(questionNumber - 1, option); // Update the selected answer for this question
+  const handleOptionSelect = (choice) => {
+    setSelectedOption(choice.id);
+    onAnswerChange(questionNumber - 1, choice);
   };
 
   return (
     <div className="bg-white rounded-lg shadow p-4 mb-6">
       {/* Question */}
       <h2 className="text-gray-800 font-semibold text-lg mb-4">
-        {questionNumber}. {questionData.question}
+        {questionNumber}. {questionData.question_text}
       </h2>
 
       {/* Options */}
       <div className="space-y-4">
-        {questionData.options.map((option, index) => (
+        {questionData.choices.map((choice) => (
           <div
-            key={index}
-            onClick={() => handleOptionSelect(option)}
+            key={choice.id}
+            onClick={() => handleOptionSelect(choice)}
             className={`border rounded-lg p-3 cursor-pointer ${
-              selectedOption === option
+              selectedOption === choice.id
                 ? "bg-blue-100 border-blue-200"
                 : "hover:bg-gray-100"
             }`}
           >
-            <span className="font-semibold">
-              {String.fromCharCode(65 + index)}.
-            </span>{" "}
-            <span>{option}</span>
+            <span>{choice.choice_text}</span>
           </div>
         ))}
       </div>
@@ -41,51 +39,71 @@ const Question = ({ questionData, questionNumber, onAnswerChange }) => {
 
 // Main Quiz Page
 const QuizPage = () => {
-  const [score, setScore] = useState(210);
-  const [answers, setAnswers] = useState([]); // Array to store user answers
+  const [score, setScore] = useState(0);
+  const [answers, setAnswers] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Sample Data for Questions
-  const questions = [
-    {
-      question:
-        "Even though the team members worked diligently to complete the project, they _______ enough time to finalize all the details.",
-      options: [
-        "Lorem ipsum odor amet.",
-        "Lorem ipsum odor amet, consectetuer adipiscing.",
-        "Lorem ipsum odor amet, consectetuer adipiscing elit.",
-        "Lorem ipsum odor.",
-      ],
-      correctAnswer: "Lorem ipsum odor amet.",
-    },
-    {
-      question:
-        "The cultural artifacts discovered by archaeologists in the region _______ important information about the trade routes of ancient civilizations.",
-      options: ["provide", "provides", "provided", "is providing"],
-      correctAnswer: "provide",
-    },
-  ];
+  const navigate = useNavigate();
 
-  const handleAnswerChange = (questionIndex, answer) => {
+  const progress =
+    (answers.filter((answer) => answer?.choice_id !== null).length /
+      questions.length) *
+    100;
+
+  useEffect(() => {
+    const loadQuestions = async () => {
+      try {
+        const data = await fetchQuestions(1); 
+        setQuestions(data.questions);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadQuestions();
+  }, []);
+
+  const handleAnswerChange = (questionIndex, choice) => {
     const updatedAnswers = [...answers];
-    updatedAnswers[questionIndex] = answer; // Update the answer for the specific question
+    updatedAnswers[questionIndex] = {
+      question_id: questions[questionIndex].id,
+      choice_id: choice.id,
+    };
     setAnswers(updatedAnswers);
   };
 
-  const handleSubmit = () => {
-    // Check answers and calculate score
-    let newScore = 0;
-    questions.forEach((question, index) => {
-      if (answers[index] === question.correctAnswer) {
-        newScore += 10; // Example: 10 points for each correct answer
-      }
-    });
-    setScore(newScore);
-
-    // Display results
-    console.log("User Answers:", answers);
-    console.log("Final Score:", newScore);
-    alert(`Your final score is: ${newScore}`);
+  const handleSubmit = async () => {
+    if (answers.some((answer) => answer.choice_id === null)) {
+      alert("Harap menjawab semua pertanyaan sebelum submit.");
+      return;
+    }
+  
+    const payload = {
+      user_id: 3,
+      batch_id: 1,
+      answers: answers,
+    };
+  
+    try {
+      const result = await submitAnswers(payload);
+  
+      navigate("/result/quiz", { state: { score: result.score, percentage: result.percentage } });
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
   };
+
+  if (loading) {
+    return <p>Loading questions...</p>;
+  }
+
+  if (error) {
+    return <p className="text-red-500">Error: {error}</p>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
@@ -99,17 +117,17 @@ const QuizPage = () => {
       <div className="w-full bg-gray-200 rounded-full h-3 mb-6">
         <div
           className="bg-green-500 h-3 rounded-full"
-          style={{ width: "100%" }}
+          style={{ width: `${progress}%` }}
         ></div>
       </div>
 
       {/* Render Questions */}
       {questions.map((question, index) => (
         <Question
-          key={index}
+          key={question.id}
           questionData={question}
           questionNumber={index + 1}
-          onAnswerChange={handleAnswerChange} // Pass the handler to each Question component
+          onAnswerChange={handleAnswerChange}
         />
       ))}
 

@@ -10,6 +10,7 @@ import TestCefrPage from './pages/testCefr.jsx'
 import QuizPage from './pages/quiz.jsx'
 import Dashboard from './pages/dashboard.jsx'
 import QuizResultPage from './pages/quizResult.jsx'
+import ReviewQuiz from './pages/reviewQuiz.jsx'
 
 const router = createBrowserRouter([
   {
@@ -34,8 +35,12 @@ const router = createBrowserRouter([
     element: <ResultCefrPage />,
   },
   {
-    path: "/quiz",
+    path: "/quiz/:id",
     element: <QuizPage />,
+  },
+  {
+    path: "/review/quiz",
+    element: <ReviewQuiz />,
   },
   {
     path: "/result/quiz",

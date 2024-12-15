@@ -16,16 +16,46 @@ import { Link } from "react-router-dom";
 // export default LoginPage;
 
 
-import React from "react";
+import React, { useState } from "react";
 import loginImage from '../assets/login-1.png';
 
 function Login() {
-  const handleLogin = (event) => {
+  const [errorMessage, setErrorMessage] = useState(null);
+  const handleLogin = async (event) => {
     event.preventDefault();
-    console.log(event.target.username.value);
-    console.log(event.target.password.value);
-    window.location.href = "/test/cefr";
-  }
+    const username = event.target.username.value;
+    const password = event.target.password.value;
+
+    try {
+      const response = await fetch(
+        "https://toeflify-service-473598678247.asia-southeast2.run.app/users/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            password,
+            interests: [],
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed.");
+      }
+
+      const data = await response.json();
+      console.log("Login Success:", data);
+
+      window.location.href = "/test/cefr";
+    } catch (error) {
+      console.error("Login Error:", error);
+      setErrorMessage(error.message);
+    }
+  };
 
   return (
     <div className="flex h-screen">
@@ -53,9 +83,12 @@ function Login() {
         <p className="text-slate-600 mt-2 mb-8">
           Learn English Anytime, Anywhere.
         </p>
+        {errorMessage && (
+          <div className="mb-4 text-red-500 text-sm">{errorMessage}</div>
+        )}
         <form className="w-2/3" onSubmit={handleLogin}>
           <div className="mb-4">
-            <label className="block text-slate-700 text-sm font-bold mb-2" id="username">
+            <label className="block text-slate-700 text-sm font-bold mb-2" htmlFor="username">
               Username
             </label>
             <input
@@ -64,10 +97,11 @@ function Login() {
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               id="username"
               name="username"
+              required
             />
           </div>
           <div className="mb-4">
-            <label className="block text-slate-700 text-sm font-bold mb-2" id="password">
+            <label className="block text-slate-700 text-sm font-bold mb-2" htmlFor="password">
               Password
             </label>
             <input
@@ -76,13 +110,12 @@ function Login() {
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               id="password"
               name="password"
+              required
             />
           </div>
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200"
-            id="login"
-            
           >
             Login
           </button>
@@ -99,3 +132,4 @@ function Login() {
 }
 
 export default Login;
+

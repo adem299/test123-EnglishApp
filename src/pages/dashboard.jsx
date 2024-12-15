@@ -1,10 +1,35 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import dashboardImage from "../assets/dashboard.png";
 import quizImage1 from "../assets/quiz-1.png";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import { LeaderboardRounded, Settings, SearchRounded } from "@mui/icons-material";
+import { fetchQuizData } from "../services/quiz.service";
+
+import {
+  LeaderboardRounded,
+  Settings,
+  SearchRounded,
+} from "@mui/icons-material";
 
 const Dashboard = () => {
+  const [quizData, setQuizData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadQuizData = async () => {
+      try {
+        const data = await fetchQuizData();
+        setQuizData(data);
+      } catch (err) {
+        setError("Failed to fetch quiz data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadQuizData();
+  }, []);
+
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
@@ -32,8 +57,8 @@ const Dashboard = () => {
             className="flex items-center px-6 py-2 mt-3 text-sm font-medium hover:bg-blue-500 hover:rounded-l-full"
           >
             <div className="flex items-center gap-x-2">
-            <LeaderboardRounded />
-                Leaderboard
+              <LeaderboardRounded />
+              Leaderboard
             </div>
           </a>
           <a
@@ -41,8 +66,8 @@ const Dashboard = () => {
             className="flex items-center px-6 py-2 mt-3 text-sm font-medium hover:bg-blue-500 hover:rounded-l-full"
           >
             <div className="flex items-center gap-x-2">
-            <Settings />
-            Settings
+              <Settings />
+              Settings
             </div>
           </a>
         </nav>
@@ -87,48 +112,28 @@ const Dashboard = () => {
         {/* Continue Learning */}
         <section className="mt-8">
           <h2 className="text-lg font-bold">Continue Learning</h2>
-          <div className="flex space-x-4 mt-4">
-            <button className="px-4 py-2 bg-blue-200 text-blue-800 rounded-lg">
-              Written Expression
-            </button>
-            <button className="px-4 py-2 bg-blue-200 text-blue-800 rounded-lg">
-              Structure Grammar
-            </button>
-          </div>
-
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-            <div className="bg-white rounded-lg shadow-md p-4">
-              <img src={quizImage1} alt="Learning" className="rounded-lg" />
-              <p className="mt-2 font-semibold">Written Expression</p>
-              <p className="text-sm text-gray-500">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry.
-              </p>
-            </div>
-            <div className="bg-white rounded-lg shadow-md p-4">
-              <img src={quizImage1} alt="Learning" className="rounded-lg" />
-              <p className="mt-2 font-semibold">Structure Grammar</p>
-              <p className="text-sm text-gray-500">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry.
-              </p>
-            </div>
-            <div className="bg-white rounded-lg shadow-md p-4">
-              <img src={quizImage1} alt="Learning" className="rounded-lg" />
-              <p className="mt-2 font-semibold">Written Expression</p>
-              <p className="text-sm text-gray-500">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry.
-              </p>
-            </div>
-            <div className="bg-white rounded-lg shadow-md p-4">
-              <img src={quizImage1} alt="Learning" className="rounded-lg" />
-              <p className="mt-2 font-semibold">Structure Grammar</p>
-              <p className="text-sm text-gray-500">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry.
-              </p>
-            </div>
+            {loading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p className="text-red-500">{error}</p>
+            ) : (
+              quizData.map((quiz) => (
+                <a
+                  key={quiz.id} // Gunakan id unik sebagai key
+                  href={`/quiz/${quiz.id}`} // Tautkan ke halaman quiz dengan id
+                  className="block bg-white rounded-lg shadow-md p-4"
+                >
+                  <img
+                    src={quiz.image || quizImage1} // Gambar quiz jika tersedia, fallback ke gambar default
+                    alt={quiz.title}
+                    className="rounded-lg"
+                  />
+                  <p className="mt-2 font-semibold">{quiz.category}</p>
+                  <p className="text-sm text-gray-500">{quiz.description}</p>
+                </a>
+              ))
+            )}
           </div>
         </section>
       </main>

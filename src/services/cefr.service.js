@@ -9,7 +9,7 @@ const useCefrLevel = () => {
   const predictCefrLevel = async (text) => {
     setLoading(true);
     try {
-      const payload = [text]; // Bungkus input text dalam array
+      const payload = [text];
       console.log("Payload being sent:", payload);
       const res = await axios.post(
         "https://toeflify-service-473598678247.asia-southeast2.run.app/predict/cefr-level",

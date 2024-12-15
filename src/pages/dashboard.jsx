@@ -1,6 +1,8 @@
 import { React, useState, useEffect } from "react";
 import dashboardImage from "../assets/dashboard.png";
 import quizImage1 from "../assets/quiz-1.png";
+import profileImg from "../assets/profile-img.png";
+
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { fetchQuizData } from "../services/quiz.service";
 
@@ -88,7 +90,7 @@ const Dashboard = () => {
           <div className="flex items-center space-x-4">
             <div className="w-10 h-10 bg-gray-300 rounded-full">
               <img
-                src="./assets/profile.jpg"
+                src={profileImg}
                 alt="Profile"
                 className="w-full h-full rounded-full"
               />

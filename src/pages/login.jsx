@@ -50,7 +50,7 @@ function Login() {
       const data = await response.json();
       console.log("Login Success:", data);
 
-      window.location.href = "/test/cefr";
+      window.location.href = "/dashboard";
     } catch (error) {
       console.error("Login Error:", error);
       setErrorMessage(error.message);

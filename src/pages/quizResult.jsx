@@ -1,6 +1,6 @@
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import CompleteQuizImage from "../assets/completed-quiz.png";
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import CompleteQuizImage from '../assets/completed-quiz.png';
 
 const QuizResultPage = () => {
   const location = useLocation();
@@ -12,11 +12,7 @@ const QuizResultPage = () => {
       <div className="text-center">
         {/* Image Section */}
         <div className="mb-6">
-          <img
-            src={CompleteQuizImage}
-            alt="Exercise Completed"
-            className="w-64 h-64 mx-auto"
-          />
+          <img src={CompleteQuizImage} alt="Exercise Completed" className="w-64 h-64 mx-auto" />
         </div>
         {/* Title */}
         <h1 className="text-2xl font-bold text-blue-600 mb-8">Exercise Completed</h1>
@@ -37,16 +33,10 @@ const QuizResultPage = () => {
 
         {/* Buttons */}
         <div className="flex justify-center gap-8">
-          <button
-            className="bg-yellow-400 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-yellow-500"
-            onClick={() => navigate("https://test123-english-app.vercel.app/review/quiz")}
-          >
+          <button className="bg-yellow-400 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-yellow-500" onClick={() => navigate('/review/quiz')}>
             REVIEW EXERCISE
           </button>
-          <button
-            className="bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-600"
-            onClick={() => navigate("https://test123-english-app.vercel.app/dashboard")}
-          >
+          <button className="bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-600" onClick={() => navigate('/dashboard')}>
             NEXT
           </button>
         </div>

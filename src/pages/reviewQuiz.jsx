@@ -1,14 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const ReviewQuestion = ({
-  question,
-  answers,
-  correctAnswer,
-  userAnswer,
-  explanation,
-  tips,
-}) => {
+const ReviewQuestion = ({ question, answers, correctAnswer, userAnswer, explanation, tips }) => {
   return (
     <div className="bg-white rounded-lg shadow p-4 mb-6">
       {/* Nomor dan Pertanyaan */}
@@ -19,16 +12,7 @@ const ReviewQuestion = ({
       {/* Pilihan Jawaban */}
       <div className="space-y-4">
         {answers.map((answer, index) => (
-          <div
-            key={index}
-            className={`border rounded-lg p-3 cursor-pointer ${
-              correctAnswer === answer.text
-                ? "bg-green-100 border-green-500"
-                : userAnswer === answer.text
-                ? "bg-red-100 border-red-500"
-                : "hover:bg-gray-100"
-            }`}
-          >
+          <div key={index} className={`border rounded-lg p-3 cursor-pointer ${correctAnswer === answer.text ? 'bg-green-100 border-green-500' : userAnswer === answer.text ? 'bg-red-100 border-red-500' : 'hover:bg-gray-100'}`}>
             <span className="font-medium">
               {answer.label}. {answer.text}
             </span>
@@ -66,34 +50,26 @@ const ReviewQuiz = () => {
     // Fetch data from API
     const fetchQuestions = async () => {
       try {
-        const response = await fetch(
-          "https://toeflify-service-473598678247.asia-southeast2.run.app/exam/history/3"
-        );
+        const response = await fetch('https://toeflify-service-473598678247.asia-southeast2.run.app/exam/history/3');
         const data = await response.json();
 
-        const transformedQuestions = data.exam_history
-          .slice(-1)[0]
-          .questions_details.map((questionDetail, questionIndex) => ({
-            number: questionIndex + 1,
-            text: questionDetail.question_text,
-            answers: questionDetail.choices.map((choice, index) => ({
-              label: String.fromCharCode(65 + index), // A, B, C, D
-              text: choice.choice_text,
-            })),
-            correctAnswer: questionDetail.choices.find(
-              (choice) =>
-                choice.choice_text === questionDetail.chosen_choice &&
-                questionDetail.is_correct
-            )?.choice_text,
-            userAnswer: questionDetail.chosen_choice,
-            explanation: questionDetail.explanation,
-            tips: questionDetail.tips ? [questionDetail.tips] : [],
-          }));
+        const transformedQuestions = data.exam_history.slice(-1)[0].questions_details.map((questionDetail, questionIndex) => ({
+          number: questionIndex + 1,
+          text: questionDetail.question_text,
+          answers: questionDetail.choices.map((choice, index) => ({
+            label: String.fromCharCode(65 + index), // A, B, C, D
+            text: choice.choice_text,
+          })),
+          correctAnswer: questionDetail.choices.find((choice) => choice.choice_text === questionDetail.chosen_choice && questionDetail.is_correct)?.choice_text,
+          userAnswer: questionDetail.chosen_choice,
+          explanation: questionDetail.explanation,
+          tips: questionDetail.tips ? [questionDetail.tips] : [],
+        }));
 
         setQuestions(transformedQuestions);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching questions:", error);
+        console.error('Error fetching questions:', error);
         setLoading(false);
       }
     };
@@ -115,7 +91,7 @@ const ReviewQuiz = () => {
             if (window.history.length > 1) {
               navigate(-1); // Go back to the previous page
             } else {
-              navigate("https://test123-english-app.vercel.app/dashboard"); // Fallback to the dashboard if no history
+              navigate('https://test123-english-app.vercel.app/dashboard'); // Fallback to the dashboard if no history
             }
           }}
         >
@@ -127,15 +103,7 @@ const ReviewQuiz = () => {
       <h1 className="text-2xl font-bold mb-6 text-center">Review Exercise</h1>
 
       {questions.map((question, index) => (
-        <ReviewQuestion
-          key={index}
-          question={question}
-          answers={question.answers}
-          correctAnswer={question.correctAnswer}
-          userAnswer={question.userAnswer}
-          explanation={question.explanation}
-          tips={question.tips}
-        />
+        <ReviewQuestion key={index} question={question} answers={question.answers} correctAnswer={question.correctAnswer} userAnswer={question.userAnswer} explanation={question.explanation} tips={question.tips} />
       ))}
     </div>
   );

@@ -13,44 +13,48 @@ import QuizResultPage from './pages/quizResult.jsx'
 import ReviewQuiz from './pages/reviewQuiz.jsx'
 import TestWritten from './pages/testWritten.jsx'
 
+
 const router = createBrowserRouter([
   {
-    path: "/",
-    // element: <LoginPage />,
-    element: <TestWritten />,
-    errorElement: <ErrorPage />,  
+    path: '/',
+    element: <div>Hello World</div>,
+    errorElement: <ErrorPage />,
   },
   {
-    path: "/login",
+    path: '/login',
     element: <LoginPage />,
   },
   {
-    path: "/register",
+    path: '/register',
     element: <RegisterPage />,
   },
   {
-    path: "/test/cefr",
+    path: '/test/cefr',
     element: <TestCefrPage />,
   },
   {
-    path: "/result/cefr",
+    path: '/result/cefr',
     element: <ResultCefrPage />,
   },
   {
-    path: "/quiz/:id",
+    path: '/quiz/:id',
     element: <QuizPage />,
   },
   {
-    path: "/review/quiz",
+    path: '/review/quiz',
     element: <ReviewQuiz />,
   },
   {
-    path: "/result/quiz",
+    path: '/result/quiz',
     element: <QuizResultPage />,
   },
   {
-    path: "/dashboard",
+    path: '/dashboard',
     element: <Dashboard />,
+  },
+  {
+    path: '/test/written',
+    element: <TestWritten />,
   }
 ])
 

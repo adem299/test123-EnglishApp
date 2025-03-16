@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { fetchQuestions, submitAnswers } from "../services/quiz.service";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { fetchQuestions, submitAnswers } from '../services/quiz.service';
+import { useNavigate } from 'react-router-dom';
 
 const Question = ({ questionData, questionNumber, onAnswerChange }) => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -20,15 +20,7 @@ const Question = ({ questionData, questionNumber, onAnswerChange }) => {
       {/* Options */}
       <div className="space-y-4">
         {questionData.choices.map((choice) => (
-          <div
-            key={choice.id}
-            onClick={() => handleOptionSelect(choice)}
-            className={`border rounded-lg p-3 cursor-pointer ${
-              selectedOption === choice.id
-                ? "bg-blue-100 border-blue-200"
-                : "hover:bg-gray-100"
-            }`}
-          >
+          <div key={choice.id} onClick={() => handleOptionSelect(choice)} className={`border rounded-lg p-3 cursor-pointer ${selectedOption === choice.id ? 'bg-blue-100 border-blue-200' : 'hover:bg-gray-100'}`}>
             <span>{choice.choice_text}</span>
           </div>
         ))}
@@ -48,15 +40,12 @@ const QuizPage = () => {
 
   const navigate = useNavigate();
 
-  const progress =
-    (answers.filter((answer) => answer?.choice_id !== null).length /
-      questions.length) *
-    100;
+  const progress = (answers.filter((answer) => answer?.choice_id !== null).length / questions.length) * 100;
 
   useEffect(() => {
     const loadQuestions = async () => {
       try {
-        const data = await fetchQuestions(id); 
+        const data = await fetchQuestions(1);
         setQuestions(data.questions);
       } catch (err) {
         setError(err.message);
@@ -79,22 +68,22 @@ const QuizPage = () => {
 
   const handleSubmit = async () => {
     if (answers.some((answer) => answer.choice_id === null)) {
-      alert("Harap menjawab semua pertanyaan sebelum submit.");
+      alert('Harap menjawab semua pertanyaan sebelum submit.');
       return;
     }
-  
+
     const payload = {
       user_id: 3,
       batch_id: 1,
       answers: answers,
     };
-  
+
     try {
       const result = await submitAnswers(payload);
-  
-      navigate("/result/quiz", { state: { score: result.score, percentage: result.percentage } });
+
+      navigate('/result/quiz', { state: { score: result.score, percentage: result.percentage } });
     } catch (err) {
-      alert("Error: " + err.message);
+      alert('Error: ' + err.message);
     }
   };
 
@@ -116,28 +105,17 @@ const QuizPage = () => {
 
       {/* Progress Bar */}
       <div className="w-full bg-gray-200 rounded-full h-3 mb-6">
-        <div
-          className="bg-green-500 h-3 rounded-full"
-          style={{ width: `${progress}%` }}
-        ></div>
+        <div className="bg-green-500 h-3 rounded-full" style={{ width: `${progress}%` }}></div>
       </div>
 
       {/* Render Questions */}
       {questions.map((question, index) => (
-        <Question
-          key={question.id}
-          questionData={question}
-          questionNumber={index + 1}
-          onAnswerChange={handleAnswerChange}
-        />
+        <Question key={question.id} questionData={question} questionNumber={index + 1} onAnswerChange={handleAnswerChange} />
       ))}
 
       {/* Submit Button */}
       <div className="flex justify-end mt-6">
-        <button
-          onClick={handleSubmit}
-          className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-        >
+        <button onClick={handleSubmit} className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
           Submit
         </button>
       </div>

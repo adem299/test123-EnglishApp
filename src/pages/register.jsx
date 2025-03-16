@@ -8,7 +8,7 @@ const RegisterPage = () => {
       <FormRegister />
       <p className="text-sm mt-5 text-center">
         Have an account?{" "}
-        <Link to="https://test123-english-app.vercel.app/login" className="font-bold text-blue-600">
+        <Link to="/login" className="font-bold text-blue-600">
           Login
         </Link>
       </p>

@@ -20,7 +20,7 @@ const TestCefrPage = () => {
   useEffect(() => {
     if (cefrLevel) {
       console.log("CEFR Level updated:", cefrLevel);
-      navigate("https://test123-english-app.vercel.app/result/cefr", { state: { cefrLevel } });
+      navigate("/result/cefr", { state: { cefrLevel } });
     }
   }, [cefrLevel, navigate]);
 

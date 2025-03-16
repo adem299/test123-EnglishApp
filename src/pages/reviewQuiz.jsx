@@ -81,10 +81,11 @@ const ReviewQuiz = () => {
               text: choice.choice_text,
             })),
             correctAnswer: questionDetail.choices.find(
-              (choice) =>
-                choice.choice_text === questionDetail.chosen_choice &&
-                questionDetail.is_correct
-            )?.choice_text,
+                (choice) =>
+                  choice.choice_text === questionDetail.chosen_choice &&
+                  questionDetail.is_correct
+              )?.choice_text,
+              
             userAnswer: questionDetail.chosen_choice,
             explanation: questionDetail.explanation,
             tips: questionDetail.tips ? [questionDetail.tips] : [],
@@ -115,7 +116,7 @@ const ReviewQuiz = () => {
             if (window.history.length > 1) {
               navigate(-1); // Go back to the previous page
             } else {
-              navigate("https://test123-english-app.vercel.app/dashboard"); // Fallback to the dashboard if no history
+              navigate("/dashboard"); // Fallback to the dashboard if no history
             }
           }}
         >

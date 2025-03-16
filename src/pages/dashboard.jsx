@@ -38,10 +38,8 @@ const Dashboard = () => {
       <aside className="w-64 bg-blue-600 text-white">
         <div className="p-6">
           <div className="flex items-center space-x-4">
-            <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-              <img src="./assets/logo.png" alt="Logo" />
-            </div>
-            <span className="text-lg font-semibold">TEST123</span>
+            
+            <span className="text-lg font-bold">TEST123</span>
           </div>
         </div>
         <nav className="mt-10">
@@ -87,7 +85,7 @@ const Dashboard = () => {
               className="flex-1 py-2 px-3 focus:outline-none"
             />
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 bg-white shadow-md rounded-lg max-w-md py-1.5 px-3">
             <div className="w-10 h-10 bg-gray-300 rounded-full">
               <img
                 src={profileImg}
@@ -96,7 +94,7 @@ const Dashboard = () => {
               />
             </div>
             <div>
-              <p className="text-sm font-semibold">Isan Gozi Zulfiqri</p>
+              <p className="text-sm font-semibold">Isan Gozi</p>
               <p className="text-xs text-gray-500">Level A1</p>
             </div>
           </div>
@@ -123,7 +121,7 @@ const Dashboard = () => {
               quizData.map((quiz) => (
                 <a
                   key={quiz.id} // Gunakan id unik sebagai key
-                  href={`https://test123-english-app.vercel.app/quiz/${quiz.id}`} // Tautkan ke halaman quiz dengan id
+                  href={`/quiz/${quiz.id}`} // Tautkan ke halaman quiz dengan id
                   className="block bg-white rounded-lg shadow-md p-4"
                 >
                   <img

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchQuestions, submitAnswers } from "../services/quiz.service";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Question = ({ questionData, questionNumber, onAnswerChange }) => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -39,6 +39,7 @@ const Question = ({ questionData, questionNumber, onAnswerChange }) => {
 
 // Main Quiz Page
 const QuizPage = () => {
+  const { id } = useParams();
   const [score, setScore] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [questions, setQuestions] = useState([]);
@@ -55,7 +56,7 @@ const QuizPage = () => {
   useEffect(() => {
     const loadQuestions = async () => {
       try {
-        const data = await fetchQuestions(1); 
+        const data = await fetchQuestions(id); 
         setQuestions(data.questions);
       } catch (err) {
         setError(err.message);
@@ -91,7 +92,7 @@ const QuizPage = () => {
     try {
       const result = await submitAnswers(payload);
   
-      navigate("https://test123-english-app.vercel.app/result/quiz", { state: { score: result.score, percentage: result.percentage } });
+      navigate("/result/quiz", { state: { score: result.score, percentage: result.percentage } });
     } catch (err) {
       alert("Error: " + err.message);
     }

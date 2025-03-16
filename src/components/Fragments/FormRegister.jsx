@@ -38,6 +38,8 @@ const FormRegister = () => {
 
     // Kirim data form jika password cocok
     registerUser(formData);
+
+    window.location.href = "/test/cefr";
   };
 
   // Menangani ketika registrasi berhasil

@@ -11,43 +11,45 @@ import QuizPage from './pages/quiz.jsx'
 import Dashboard from './pages/dashboard.jsx'
 import QuizResultPage from './pages/quizResult.jsx'
 import ReviewQuiz from './pages/reviewQuiz.jsx'
+import TestWritten from './pages/testWritten.jsx'
 
 const router = createBrowserRouter([
   {
-    path: "https://test123-english-app.vercel.app/login",
-    element: <LoginPage />,
+    path: "/",
+    // element: <LoginPage />,
+    element: <TestWritten />,
     errorElement: <ErrorPage />,  
   },
   {
-    path: "https://test123-english-app.vercel.app/login",
+    path: "/login",
     element: <LoginPage />,
   },
   {
-    path: "https://test123-english-app.vercel.app/register",
+    path: "/register",
     element: <RegisterPage />,
   },
   {
-    path: "https://test123-english-app.vercel.app/test/cefr",
+    path: "/test/cefr",
     element: <TestCefrPage />,
   },
   {
-    path: "https://test123-english-app.vercel.app/result/cefr",
+    path: "/result/cefr",
     element: <ResultCefrPage />,
   },
   {
-    path: "https://test123-english-app.vercel.app/quiz/:id",
+    path: "/quiz/:id",
     element: <QuizPage />,
   },
   {
-    path: "https://test123-english-app.vercel.app/review/quiz",
+    path: "/review/quiz",
     element: <ReviewQuiz />,
   },
   {
-    path: "https://test123-english-app.vercel.app/result/quiz",
+    path: "/result/quiz",
     element: <QuizResultPage />,
   },
   {
-    path: "https://test123-english-app.vercel.app/dashboard",
+    path: "/dashboard",
     element: <Dashboard />,
   }
 ])

@@ -1,7 +1,23 @@
+import axios from "axios";
+
+const API_BASE_URL = import.meta.env.VITE_BASE_URL;
+
+export const fetchExamData = async (interest, cefr_level, subject) => {
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/exam/find/${interest}/${cefr_level}/${subject}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching exam data:", error);
+    throw error;
+  }
+};
+
 export const fetchQuizDataById = async (id) => {
     try {
       const response = await fetch(
-        `https://toeflify-service-473598678247.asia-southeast2.run.app/exam/${id}/`
+        `http://localhost:8000/exam/${id}/`
       );
       if (!response.ok) {
         throw new Error(`Error fetching quiz data: ${response.status}`);
@@ -18,7 +34,7 @@ export const fetchQuizDataById = async (id) => {
 export const fetchQuizData = async () => {
     try {
       const response = await fetch(
-        `https://toeflify-service-473598678247.asia-southeast2.run.app/exams`
+        `http://localhost:8000/exams`
       );
       if (!response.ok) {
         throw new Error(`Error fetching quiz data: ${response.status}`);
@@ -34,7 +50,7 @@ export const fetchQuizData = async () => {
 
 
   export const fetchQuestions = async (examId) => {
-    const API_URL = `https://toeflify-service-473598678247.asia-southeast2.run.app/exam/${examId}/questions`;
+    const API_URL = `http://localhost:8000/exam/${examId}/questions`;
   
     const response = await fetch(API_URL);
     if (!response.ok) {
@@ -46,7 +62,7 @@ export const fetchQuizData = async () => {
   
   export const submitAnswers = async (payload) => {
     const SUBMIT_API_URL =
-      "https://toeflify-service-473598678247.asia-southeast2.run.app/exam/submit";
+      "http://localhost:8000/exam/submit";
   
     const response = await fetch(SUBMIT_API_URL, {
       method: "POST",

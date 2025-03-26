@@ -12,7 +12,7 @@ const useCefrLevel = () => {
       const payload = [text];
       console.log("Payload being sent:", payload);
       const res = await axios.post(
-        "https://toeflify-service-473598678247.asia-southeast2.run.app/predict/cefr-level",
+        "http://localhost:8000/predict/cefr-level",
         payload,
         {
           headers: {

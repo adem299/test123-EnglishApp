@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import Button from "../Elements/Button";
 import InputForm from "../Elements/Input";
-import useRegisterUser from "../../services/register.service"; // Pastikan path-nya benar
+import { registerUser } from "../../services/user.service";
 
 const FormRegister = () => {
   const [formData, setFormData] = useState({
@@ -9,49 +9,79 @@ const FormRegister = () => {
     username: "",
     password: "",
     confirmPassword: "",
+    interests: [],
   });
 
-  const { message, loading, error, registerUser } = useRegisterUser();
-
-  // State untuk error khusus di FormRegister
   const [formError, setFormError] = useState("");
-  
-  // State untuk menampilkan pop-up pesan sukses
+  const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  const interestOptions = ["reading", "traveling", "coding"];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleInterestChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setFormData({ ...formData, interests: [...formData.interests, value] });
+    } else {
+      setFormData({
+        ...formData,
+        interests: formData.interests.filter((interest) => interest !== value),
+      });
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validasi password dan confirm password
+    if (
+      !formData.fullname ||
+      !formData.username ||
+      !formData.password ||
+      !formData.confirmPassword ||
+      !formData.interests
+    ) {
+      setFormError("All fields are required!");
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setFormError("Password and Confirm Password must match!");
-      return; // Hentikan form submission
+      return;
     }
 
-    // Bersihkan error sebelum mengirim data
     setFormError("");
+    setLoading(true);
 
-    // Kirim data form jika password cocok
-    registerUser(formData);
-
-    window.location.href = "/test/cefr";
+    registerUser(
+      formData.fullname,
+      formData.username,
+      formData.password,
+      formData.interests,
+      (data) => {
+        setLoading(false);
+        if (data.err) {
+          setFormError(
+            data.err.response?.data?.detail || "Registration failed"
+          );
+        } else {
+          console.log("Success:", data);
+          setShowSuccess(true);
+          setTimeout(() => {
+            setShowSuccess(false);
+            window.location.href = "/test/cefr"; // Redirect setelah sukses
+          }, 3000);
+        }
+      }
+    );
   };
 
-  // Menangani ketika registrasi berhasil
-  useEffect(() => {
-    if (message) {
-      setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 3000); // Sembunyikan pop-up setelah 3 detik
-    }
-  }, [message]);
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="space-y-4">
       <InputForm
         label="Fullname"
         type="text"
@@ -84,30 +114,33 @@ const FormRegister = () => {
         value={formData.confirmPassword}
         onChange={handleChange}
       />
+      <div>
+        <label className="block font-medium mb-2">Interests</label>
+        <div className="grid grid-cols-2 gap-2">
+          {interestOptions.map((interest) => (
+            <label key={interest} className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                name="interests"
+                value={interest}
+                checked={formData.interests.includes(interest)}
+                onChange={handleInterestChange}
+              />
+              {interest}
+            </label>
+          ))}
+        </div>
+      </div>
+
       <Button className="bg-blue-600 w-full" type="submit" disabled={loading}>
         {loading ? "Registering..." : "Register"}
       </Button>
 
-      {/* Menampilkan error yang datang dari form */}
-      {formError && <p style={{ color: "red" }}>{formError}</p>}
+      {formError && <p className="text-red-500 text-sm">{formError}</p>}
 
-      {/* Menampilkan error dari API */}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      {/* Menampilkan pesan sukses jika registrasi berhasil */}
-      {message && showSuccess && (
-        <div style={{ 
-          position: 'fixed', 
-          top: '20px', 
-          left: '50%', 
-          transform: 'translateX(-50%)', 
-          backgroundColor: 'green', 
-          color: 'white', 
-          padding: '10px 20px', 
-          borderRadius: '5px',
-          zIndex: '1000' 
-        }}>
-          {message}
+      {showSuccess && (
+        <div className="fixed top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded shadow-md">
+          Registration Successful! Redirecting...
         </div>
       )}
     </form>

@@ -139,11 +139,11 @@ const TestWritten = () => {
           </svg>
           <span className="ml-2">Back</span>
         </button>
-        <div className="ml-auto">
+        {/* <div className="ml-auto">
           <span className="bg-orange-500 text-white px-4 py-2 rounded-md">
             Score : {score}
           </span>
-        </div>
+        </div> */}
       </div>
 
       {/* Progress Bar */}
@@ -159,16 +159,17 @@ const TestWritten = () => {
         <span>
           {answeredQuestions}/{totalQuestions} Question
         </span>
+        
       </div>
+      <h2 className="font-bold my-4">
+              B. Choose the incorrect word part of the sentence.
+            </h2>
 
       {questions.map((question) => {
         const selectedOption = selectedOptions[question.id];
 
         return (
           <div key={question.id} className="p-4 border-b">
-            <h2 className="font-bold mb-4">
-              B. Choose the incorrect word part of the sentence.
-            </h2>
 
             <div className="flex items-start mb-6">
               <div className="bg-gray-500 text-white rounded-md w-8 h-8 flex items-center justify-center mr-3 flex-shrink-0">

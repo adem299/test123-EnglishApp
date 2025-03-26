@@ -41,6 +41,10 @@ const router = createBrowserRouter([
     element: <QuizPage />,
   },
   {
+    path: '/test/structure-grammar',
+    element: <QuizPage />,
+  },
+  {
     path: '/review/quiz',
     element: <ReviewQuiz />,
   },

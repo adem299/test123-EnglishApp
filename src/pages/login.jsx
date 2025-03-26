@@ -1,6 +1,6 @@
-import AuthLayouts from '../components/Layouts/AuthLayouts';
-import FormLogin from '../components/Fragments/FormLogin';
-import { Link } from 'react-router-dom';
+// import AuthLayouts from '../components/Layouts/AuthLayouts';
+// import FormLogin from '../components/Fragments/FormLogin';
+// import { Link } from 'react-router-dom';
 
 // const LoginPage = () => {
 //   return (
@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 
 // export default LoginPage;
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import loginImage from '../assets/login-1.png';
 
 function Login() {
@@ -26,7 +26,7 @@ function Login() {
     const password = event.target.password.value;
 
     try {
-      const response = await fetch('https://toeflify-service-473598678247.asia-southeast2.run.app/users/login', {
+      const response = await fetch('http://localhost:8000/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,6 +45,8 @@ function Login() {
 
       const data = await response.json();
       console.log('Login Success:', data);
+      localStorage.setItem("username", username);
+      localStorage.setItem("user_id", data.user_id);
 
       window.location.href = '/dashboard';
     } catch (error) {

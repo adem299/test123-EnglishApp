@@ -1,4 +1,3 @@
-import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CompleteQuizImage from '../assets/completed-quiz.png';
 
@@ -36,7 +35,7 @@ const QuizResultPage = () => {
           <button className="bg-yellow-400 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-yellow-500" onClick={() => navigate('/review/quiz')}>
             REVIEW EXERCISE
           </button>
-          <button className="bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-600" onClick={() => navigate('/dashboard')}>
+          <button className="bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-600" onClick={() => navigate('/home')}>
             NEXT
           </button>
         </div>

@@ -91,7 +91,7 @@ const ReviewQuiz = () => {
             if (window.history.length > 1) {
               navigate(-1);
             } else {
-              navigate('http://localhost:8000/dashboard');
+              navigate('http://localhost:8000/home');
             }
           }}
         >

@@ -7,11 +7,11 @@ import RegisterPage from './pages/register.jsx'
 import ErrorPage from './pages/404.jsx'
 import ResultCefrPage from './pages/resultCefr.jsx'
 import TestCefrPage from './pages/testCefr.jsx'
-import QuizPage from './pages/quiz.jsx'
-import Dashboard from './pages/dashboard.jsx'
+import Home from './pages/home.jsx'
 import QuizResultPage from './pages/quizResult.jsx'
 import ReviewQuiz from './pages/reviewQuiz.jsx'
-import TestWritten from './pages/testWritten.jsx'
+import Structure from './pages/structure.jsx'
+import WrittenExpression from './pages/writtenExpression.jsx'
 
 
 const router = createBrowserRouter([
@@ -38,11 +38,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/quiz/:id',
-    element: <QuizPage />,
+    element: <Structure />,
   },
   {
     path: '/test/structure-grammar',
-    element: <QuizPage />,
+    element: <Structure />,
   },
   {
     path: '/review/quiz',
@@ -53,12 +53,12 @@ const router = createBrowserRouter([
     element: <QuizResultPage />,
   },
   {
-    path: '/dashboard',
-    element: <Dashboard />,
+    path: '/home',
+    element: <Home />,
   },
   {
     path: '/test/written',
-    element: <TestWritten />,
+    element: <WrittenExpression />,
   }
 ])
 

@@ -14,7 +14,7 @@ const Structure = () => {
   useEffect(() => {
     const loadQuestions = async () => {
       try {
-        const data = await fetchExamData("ufc", "A1", "Structure grammar");
+        const data = await fetchExamData("motogp", "A1", "Structure grammar");
         setQuestions(data.questions);
         setBatchId(data.id);
       } catch (err) {

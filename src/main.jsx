@@ -13,6 +13,7 @@ import ReviewQuiz from './pages/reviewQuiz.jsx'
 import Structure from './pages/structure.jsx'
 import WrittenExpression from './pages/writtenExpression.jsx'
 import ProfileSettings from './pages/profile.jsx'
+import Settings from './pages/setting.jsx'
 
 
 const router = createBrowserRouter([
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
   {
     path: '/profile',
     element: <ProfileSettings />,
+  },
+  {
+    path: '/settings',
+    element: <Settings />,
   }
 ])
 

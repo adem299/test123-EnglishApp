@@ -63,7 +63,7 @@ const Dashboard = () => {
       <aside className="w-20 lg:w-64 bg-gradient-to-b from-blue-700 to-blue-900 text-white transition-all duration-300 fixed h-full shadow-xl z-10">
         <div className="p-4 lg:p-6">
           <div className="flex items-center space-x-2">
-            <span className="text-xl font-bold hidden lg:block">TEST123</span>
+            <span className="text-xl font-bold hidden lg:block">TOEFLify</span>
           </div>
         </div>
         <nav className="mt-8">
@@ -82,7 +82,7 @@ const Dashboard = () => {
             <span className="hidden lg:block">Leaderboard</span>
           </a>
           <a
-            href="#"
+            href="/settings"
             className="flex items-center px-4 py-3 lg:px-6 mt-2 text-sm font-medium hover:bg-blue-600 hover:rounded-l-full transition-colors"
           >
             <Settings className="mr-2" />
@@ -132,7 +132,7 @@ const Dashboard = () => {
               <div className="absolute right-0 mt-2 w-48 bg-white/90 backdrop-blur-md rounded-xl shadow-xl border border-gray-200/50 z-20">
                 <button
                   onClick={() => {
-                    navigate("/account");
+                    navigate("/profile");
                     setIsDropdownOpen(false);
                   }}
                   className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 hover:bg-blue-100 hover:text-blue-700 transition-colors rounded-t-xl"

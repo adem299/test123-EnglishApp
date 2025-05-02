@@ -73,7 +73,7 @@ const FormRegister = () => {
           setShowSuccess(true);
           setTimeout(() => {
             setShowSuccess(false);
-            window.location.href = "/test/cefr"; // Redirect setelah sukses
+            window.location.href = "/interest"; // Redirect setelah sukses
           }, 3000);
         }
       }
@@ -114,23 +114,6 @@ const FormRegister = () => {
         value={formData.confirmPassword}
         onChange={handleChange}
       />
-      <div>
-        <label className="block font-medium mb-2">Interests</label>
-        <div className="grid grid-cols-2 gap-2">
-          {interestOptions.map((interest) => (
-            <label key={interest} className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                name="interests"
-                value={interest}
-                checked={formData.interests.includes(interest)}
-                onChange={handleInterestChange}
-              />
-              {interest}
-            </label>
-          ))}
-        </div>
-      </div>
 
       <Button className="bg-blue-600 w-full" type="submit" disabled={loading}>
         {loading ? "Registering..." : "Register"}

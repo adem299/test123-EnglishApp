@@ -1,79 +1,83 @@
-import { StrictMode } from 'react'
-import ReactDOM from 'react-dom/client' 
-import './index.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import LoginPage from './pages/login.jsx'
-import RegisterPage from './pages/register.jsx'
-import ErrorPage from './pages/404.jsx'
-import ResultCefrPage from './pages/resultCefr.jsx'
-import TestCefrPage from './pages/testCefr.jsx'
-import Home from './pages/home.jsx'
-import QuizResultPage from './pages/quizResult.jsx'
-import ReviewQuiz from './pages/reviewQuiz.jsx'
-import Structure from './pages/structure.jsx'
-import WrittenExpression from './pages/writtenExpression.jsx'
-import ProfileSettings from './pages/profile.jsx'
-import Settings from './pages/setting.jsx'
-
+import { StrictMode } from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import LoginPage from "./pages/login.jsx";
+import RegisterPage from "./pages/register.jsx";
+import ErrorPage from "./pages/404.jsx";
+import ResultCefrPage from "./pages/resultCefr.jsx";
+import TestCefrPage from "./pages/testCefr.jsx";
+import Home from "./pages/home.jsx";
+import QuizResultPage from "./pages/quizResult.jsx";
+import ReviewQuiz from "./pages/reviewQuiz.jsx";
+import Structure from "./pages/structure.jsx";
+import WrittenExpression from "./pages/writtenExpression.jsx";
+import ProfileSettings from "./pages/profile.jsx";
+import Settings from "./pages/setting.jsx";
+import InterestPage from "./pages/interest.jsx";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <div>Hello World</div>,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/login',
+    path: "/login",
     element: <LoginPage />,
   },
   {
-    path: '/register',
+    path: "/register",
     element: <RegisterPage />,
   },
   {
-    path: '/test/cefr',
+    path: "/interest",
+    element: <InterestPage />,
+  },
+  {
+    path: "/test/cefr",
     element: <TestCefrPage />,
   },
   {
-    path: '/result/cefr',
+    path: "/result/cefr",
     element: <ResultCefrPage />,
   },
   {
-    path: '/quiz/:id',
+    path: "/quiz/:id",
     element: <Structure />,
   },
   {
-    path: '/test/structure-grammar',
+    path: "/test/structure-grammar",
     element: <Structure />,
   },
   {
-    path: '/review/quiz',
+    path: "/review/quiz",
     element: <ReviewQuiz />,
   },
   {
-    path: '/result/quiz',
+    path: "/result/quiz",
     element: <QuizResultPage />,
   },
   {
-    path: '/home',
+    path: "/home",
     element: <Home />,
   },
   {
-    path: '/test/written',
+    path: "/test/written",
     element: <WrittenExpression />,
   },
   {
-    path: '/profile',
+    path: "/profile",
     element: <ProfileSettings />,
   },
   {
-    path: '/settings',
+    path: "/settings",
     element: <Settings />,
-  }
-])
+  },
+]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>,
-)
+  </StrictMode>
+);

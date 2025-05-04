@@ -12,6 +12,21 @@ export default function ProfileSettings() {
     { id: 'logout', label: 'Logout', icon: LogOut, danger: true },
   ];
 
+  // Predefined list of available interests
+  const availableInterests = [
+    'Fitness',
+    'Design',
+    'Music',
+    'Education',
+    'Sports',
+    'Programming',
+    'Food & Drink',
+    'Automotive',
+    'Politics',
+    'Medical',
+    'Travel',
+  ];
+
   const initialFormData = {
     firstName: 'Alex',
     lastName: 'Johnson',
@@ -20,14 +35,25 @@ export default function ProfileSettings() {
     phone: '(555) 123-4567',
     bio: 'Passionate about creating beautiful, functional user experiences that solve real problems.',
     location: 'San Francisco, CA',
-    website: 'alexjohnson.design',
+    interests: ['Technology', 'Design'], // Default selected interests
   };
 
   const [formData, setFormData] = useState(initialFormData);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    if (type === 'checkbox') {
+      // Handle interests checkbox changes
+      setFormData((prev) => {
+        const newInterests = checked
+          ? [...prev.interests, value]
+          : prev.interests.filter((interest) => interest !== value);
+        return { ...prev, interests: newInterests };
+      });
+    } else {
+      // Handle other input changes
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = () => {
@@ -36,7 +62,7 @@ export default function ProfileSettings() {
   };
 
   const handleBack = () => {
-    navigate(-1); // Navigate back to the previous page
+    navigate(-1);
   };
 
   return (
@@ -101,6 +127,11 @@ export default function ProfileSettings() {
                     <button className="mt-2 text-blue-500 text-sm font-medium">
                       Change profile photo
                     </button>
+                  </div>
+                  <div className="flex-1 text-right">
+                    <p className="text-2xl text-gray-800">Level A1</p>
+                    <p className="text-xs text-gray-500">English</p>
+                    <p className="text-xs text-gray-500">Member since 2023</p>
                   </div>
                 </div>
 
@@ -177,17 +208,44 @@ export default function ProfileSettings() {
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
-                  <div>
+                  
+                  <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Website
+                      Interests
                     </label>
-                    <input
-                      type="url"
-                      name="website"
-                      value={formData.website}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
+                    <div className="grid grid-cols-2 gap-2 p-3 border border-gray-300 rounded-lg bg-white">
+                      {availableInterests.map((interest) => (
+                        <label key={interest} className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            name="interests"
+                            value={interest}
+                            checked={formData.interests.includes(interest)}
+                            onChange={handleChange}
+                            className="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300 rounded"
+                          />
+                          <span className="text-sm text-gray-700">{interest}</span>
+                        </label>
+                      ))}
+                    </div>
+                    <p className="mt-1 text-sm text-gray-500">
+                      Select your interests (choose as many as you like).
+                    </p>
+                    {formData.interests.length > 0 && (
+                      <div className="mt-2">
+                        <p className="text-sm font-medium text-gray-700">Selected Interests:</p>
+                        <div className="flex flex-wrap gap-2 mt-1">
+                          {formData.interests.map((interest) => (
+                            <span
+                              key={interest}
+                              className="inline-flex items-center px-2 py-1 text-sm text-blue-600 bg-blue-50 rounded-full"
+                            >
+                              {interest}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-1">

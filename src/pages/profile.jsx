@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { User, Lock, LogOut, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
 
 export default function ProfileSettings() {
   const [activeSection, setActiveSection] = useState('profile');
@@ -39,6 +40,9 @@ export default function ProfileSettings() {
   };
 
   const [formData, setFormData] = useState(initialFormData);
+
+  const [profileImage, setProfileImage] = useState('https://static.vecteezy.com/system/resources/previews/026/619/142/original/default-avatar-profile-icon-of-social-media-user-photo-image-vector.jpg');
+  const fileInputRef = useRef(null);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -114,19 +118,38 @@ export default function ProfileSettings() {
 
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <div className="flex items-center gap-4 mb-8">
-                  <img
-                    src="/api/placeholder/100/100"
-                    alt="Profile"
-                    className="w-24 h-24 rounded-full object-cover border border-gray-200"
-                  />
+                <img
+                  src={profileImage}
+                  alt="Profile"
+                  className="w-24 h-24 rounded-full object-cover border border-gray-200"
+                />
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={fileInputRef}
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const imageURL = URL.createObjectURL(file);
+                      setProfileImage(imageURL);
+                     
+                    }
+                  }}
+                  className="hidden"
+                />
                   <div>
                     <h2 className="text-lg font-semibold">
                       {formData.firstName} {formData.lastName}
                     </h2>
                     <p className="text-gray-500">@{formData.username}</p>
-                    <button className="mt-2 text-blue-500 text-sm font-medium">
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current.click()}
+                      className="mt-2 text-blue-500 text-sm font-medium"
+                    >
                       Change profile photo
                     </button>
+
                   </div>
                   <div className="flex-1 text-right">
                     <p className="text-2xl text-gray-800">Level A1</p>

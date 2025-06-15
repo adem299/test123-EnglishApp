@@ -5,17 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const interests = [
-  { id: "fitness", label: "FITNESS", img: "/src/assets/fitness.png" },
+  { id: "Fitness", label: "FITNESS", img: "/src/assets/fitness.png" },
   { id: "design", label: "DESIGN", img: "/src/assets/design.webp" },
   { id: "education", label: "EDUCATION", img: "/src/assets/education.jpeg" },
-  { id: "diy", label: "SPORTS", img: "/src/assets/sports.jpeg" },
+  { id: "Sports", label: "SPORTS", img: "/src/assets/sports.jpeg" },
   { id: "home", label: "PROGRAMMING", img: "/src/assets/programming.jpeg" },
-  { id: "food", label: "FOOD&DRINK", img: "/src/assets/f&d.jpeg" },
-  { id: "beauty", label: "AUTOMOTIVE", img: "/src/assets/automotive.jpeg" },
+  { id: "Food & Drink", label: "FOOD&DRINK", img: "/src/assets/f&d.jpeg" },
+  { id: "Automotive", label: "AUTOMOTIVE", img: "/src/assets/automotive.jpeg" },
   { id: "gardening", label: "POLITICS", img: "/src/assets/politics.jpeg" },
   { id: "cars", label: "MEDICAL", img: "/src/assets/medical.jpeg" },
-  { id: "travel", label: "TRAVEL", img: "/src/assets/travel.jpeg" },
+  { id: "traveling", label: "TRAVEL", img: "/src/assets/travel.jpeg" },
 ];
+
 
 const InterestPage = () => {
   const [selected, setSelected] = useState([]);
@@ -27,7 +28,24 @@ const InterestPage = () => {
   const navigate = useNavigate();
   const handleNext = () => {
     if (selected.length > 0) {
-      navigate("/test/cefr");
+      try { 
+        const user_id = localStorage.getItem("user_id");
+        const interestsData = selected.map((id) => {
+          const interest = interests.find((i) => i.id === id);
+          return interest.id;
+        });
+        
+        fetch(`http://localhost:8000/profile/${user_id}/interests`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(interestsData),
+        });
+        navigate("/test/cefr");
+      } catch (error) {
+        console.error("Error saving interests:", error);
+      }
     }
   };
 

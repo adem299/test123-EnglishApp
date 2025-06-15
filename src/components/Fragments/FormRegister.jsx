@@ -73,6 +73,7 @@ const FormRegister = () => {
           setShowSuccess(true);
           setTimeout(() => {
             setShowSuccess(false);
+            localStorage.setItem("user_id", data.id);
             window.location.href = "/interest"; // Redirect setelah sukses
           }, 3000);
         }

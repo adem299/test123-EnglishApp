@@ -21,9 +21,13 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const username = localStorage.getItem("username");
+  const [username, setUsername] = useState("");
+  // const username = localStorage.getItem("username");
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+  const [cefrLevel, setCefrLevel] = useState("");
+
+  const user_id = localStorage.getItem("user_id");
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -34,6 +38,17 @@ const Dashboard = () => {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // get user data from api
+  useEffect(() => {
+    fetch(`http://localhost:8000/profile/${user_id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        localStorage.setItem("username", data.username);
+        setUsername(data.username);
+        setCefrLevel(data.cefr_level);
+      })
   }, []);
 
   // Fetch quiz data
@@ -54,6 +69,8 @@ const Dashboard = () => {
   // Logout function
   const handleLogout = () => {
     localStorage.removeItem("username");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("attempt_id");
     navigate("/login");
   };
 
@@ -119,7 +136,7 @@ const Dashboard = () => {
                 </div>
                 <div className="text-left">
                   <p className="text-sm font-semibold text-gray-800">{username}</p>
-                  <p className="text-xs text-gray-500">Level A1</p>
+                  <p className="text-xs text-gray-500">Level {cefrLevel}</p>
                 </div>
               </div>
               {isDropdownOpen ? (
@@ -131,9 +148,11 @@ const Dashboard = () => {
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white/90 backdrop-blur-md rounded-xl shadow-xl border border-gray-200/50 z-20">
                 <button
-                  onClick={() => {
-                    navigate("/profile");
-                    setIsDropdownOpen(false);
+                  onClick={() => {;
+                    if (user_id) {
+                      navigate(`/profile/${user_id}`);
+                      setIsDropdownOpen(false);
+                    }
                   }}
                   className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 hover:bg-blue-100 hover:text-blue-700 transition-colors rounded-t-xl"
                 >
@@ -188,6 +207,13 @@ const Dashboard = () => {
               onClick={() => navigate("/test/written")}
             >
               Written Expression
+            </Button>
+
+            <Button
+              className=" bg-green-400 text-white rounded-lg px-6 py-3 hover:bg-green-600 transition-colors shadow-md flex items-center justify-center"
+              onClick={() => navigate("/test")}
+            >
+              Level Up
             </Button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

@@ -75,7 +75,7 @@ const WrittenExpression = () => {
   useEffect(() => {
     const loadQuestions = async () => {
       try {
-        const data = await fetchExamData("football", "A1", "written expression");
+        const data = await fetchExamData(userId, "written expression");
         setQuestions(data.questions);
         setBatchId(data.id);
         console.log(data.questions);

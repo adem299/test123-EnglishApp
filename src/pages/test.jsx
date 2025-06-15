@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Quiz from "../components/quiz.jsx";
-import { fetchExamData, submitAnswers } from "../services/quiz.service";
+import { fetchTestData, submitTestAnswers } from "../services/quiz.service.js";
 
-const Structure = () => {
+const Test = () => {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,9 +12,10 @@ const Structure = () => {
   const userId = localStorage.getItem("user_id");
 
   useEffect(() => {
+    console.log("User ID:", userId);
     const loadQuestions = async () => {
       try {
-        const data = await fetchExamData(userId, "structure grammar");
+        const data = await fetchTestData(userId);
         setQuestions(data.questions);
         setBatchId(data.id);
       } catch (err) {
@@ -33,9 +34,9 @@ const Structure = () => {
         question_id: parseInt(questionId),
         choice_id: choiceId,
       }));
-      const result = await submitAnswers({ user_id: userId, batch_id: batchId, answers });
+      const result = await submitTestAnswers({ user_id: userId, batch_id: batchId, answers });
       localStorage.setItem("attempt_id", result.attempt_id);
-      navigate("/result/quiz", { state: { score: result.score } });
+      navigate("/result/quiz", { state: { score: result.cefr_score, percentage: result.percentage } });
     } catch (err) {
       alert("Error: " + err.message);
     }
@@ -43,14 +44,14 @@ const Structure = () => {
 
   return (
     <Quiz
-      title="Quiz: Complete this sentence"
+      title="Test: Complete this sentence"
       questions={questions}
       onSubmit={handleSubmit}
       loading={loading}
       error={error}
-      enableUnderline={false}
+      enableUnderline={true}
     />
   );
 };
 
-export default Structure;
+export default Test;

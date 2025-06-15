@@ -4,7 +4,7 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./pages/login.jsx";
 import RegisterPage from "./pages/register.jsx";
-import ErrorPage from "./pages/404.jsx";
+// import ErrorPage from "./pages/404.jsx";
 import ResultCefrPage from "./pages/resultCefr.jsx";
 import TestCefrPage from "./pages/testCefr.jsx";
 import Home from "./pages/home.jsx";
@@ -15,12 +15,13 @@ import WrittenExpression from "./pages/writtenExpression.jsx";
 import ProfileSettings from "./pages/profile.jsx";
 import Settings from "./pages/setting.jsx";
 import InterestPage from "./pages/interest.jsx";
+import Test from "./pages/test.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hello World</div>,
-    errorElement: <ErrorPage />,
+    element: <LoginPage />,
+    // errorElement: <ErrorPage />,
   },
   {
     path: "/login",
@@ -67,9 +68,17 @@ const router = createBrowserRouter([
     element: <WrittenExpression />,
   },
   {
-    path: "/profile",
+    path: "/test",
+    element: <Test />,
+  },
+  {
+    path: "/profile/:id",
     element: <ProfileSettings />,
   },
+  // {
+  //   path: "/profile",
+  //   element: <ProfileSettings />,
+  // },
   {
     path: "/settings",
     element: <Settings />,

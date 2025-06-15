@@ -2,14 +2,27 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export const fetchExamData = async (interest, cefr_level, subject) => {
+export const fetchExamData = async (userId, subject) => {
   try {
-    const response = await axios.get(
-      `${API_BASE_URL}/exam/find/${interest}/${cefr_level}/${subject}`
-    );
+    const response = await axios.post(`${API_BASE_URL}/exam/findByUserSubject`, {
+      user_id: userId,
+      subject: subject,
+    });
     return response.data;
   } catch (error) {
-    console.error("Error fetching exam data:", error);
+    console.error('Error fetching exam:', error);
+    throw error;
+  }
+};
+
+export const fetchTestData = async (userId) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/assessment/findByUser`, {
+      user_id: userId,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching exam:', error);
     throw error;
   }
 };
@@ -63,6 +76,25 @@ export const fetchQuizData = async () => {
   export const submitAnswers = async (payload) => {
     const SUBMIT_API_URL =
       "http://localhost:8000/exam/submit";
+  
+    const response = await fetch(SUBMIT_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+  
+    if (!response.ok) {
+      throw new Error("Failed to submit answers.");
+    }
+  
+    return await response.json();
+  };
+
+  export const submitTestAnswers = async (payload) => {
+    const SUBMIT_API_URL =
+      "http://localhost:8000/assessment/submit";
   
     const response = await fetch(SUBMIT_API_URL, {
       method: "POST",
